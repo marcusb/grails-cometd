@@ -3,9 +3,5 @@
   <authorEmail>mingfai.ma@gmail.com</authorEmail>
   <title>Enable your Grails application with Comet functions</title>
   <documentation>http://grails.org/Cometd+Plugin</documentation>
-  <resources>
-    <resource>DataSource</resource>
-    <resource>UrlMappings</resource>
-  </resources>
   <dependencies />
 </plugin>
