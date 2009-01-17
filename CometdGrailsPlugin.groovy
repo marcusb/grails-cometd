@@ -31,6 +31,7 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
       xml.'servlet-mapping' + {
        'servlet-mapping'{
           'servlet-name'('cometd')
+          'url-pattern'("*.${namespace}")
           'url-pattern'("/${namespace}")
           'url-pattern'("/${namespace}/")
           'url-pattern'("/${namespace}/*")
