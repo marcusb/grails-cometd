@@ -1,3 +1,4 @@
+import grails.util.GrailsUtil
 import org.cometd.Bayeux
 
 class CometdGrailsPlugin {
@@ -21,14 +22,47 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
     static namespace =System.getProperty("cometd.namespace")?:'cometd'
 
     def doWithWebDescriptor = { xml ->
-      xml.'servlet' + {
+
+      def filters = xml.'filter'
+      filters[filters.size()-1] + {
+        filter{
+          'filter-name'('NoCacheFilter-Cometd')
+          'filter-class'('org.grails.plugins.cometd.NoCacheFilter')
+        }
+        if (GrailsUtil.isDevelopmentEnv()){
+          filter{
+          'filter-name'('NoCacheFilter-Default')
+          'filter-class'('org.grails.plugins.cometd.NoCacheFilter')
+          }
+        }
+      }
+
+      def filterMappings = xml.'filter-mapping'
+      filterMappings[filterMappings.size()-1] + {
+        'filter-mapping'{
+          'filter-name'('NoCacheFilter-Cometd')
+          'servlet-name'('cometd')
+        }
+
+        if (GrailsUtil.isDevelopmentEnv()){
+          'filter-mapping'{
+            'filter-name'('NoCacheFilter-Default')
+            'servlet-name'('default')
+          }
+        }
+      }
+
+      def servlets = xml.'servlet'
+      servlets[servlets.size()-1] + {
         servlet{
           'servlet-name'('cometd')
           'servlet-class'('org.grails.plugins.cometd.SpringCometdServlet')
           'load-on-startup'(2)
         }
       }
-      xml.'servlet-mapping' + {
+      
+      def servletMappings = xml.'servlet-mapping'
+      servletMappings[servletMappings.size()-1] + {
        'servlet-mapping'{
           'servlet-name'('cometd')
           'url-pattern'("*.${namespace}")
