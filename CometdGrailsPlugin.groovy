@@ -1,8 +1,9 @@
+import org.grails.plugins.cometd.listener.ClientListener
 import grails.util.GrailsUtil
 import org.cometd.Bayeux
 
 class CometdGrailsPlugin {
-    def version = 0.1
+    def version = '0.1.1'
     def dependsOn = [:]
 
     def author = "Mingfai Ma"
@@ -93,6 +94,18 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
     def doWithApplicationContext = { applicationContext ->
         def bayeux = applicationContext.getBean('bayeux')
         applicationContext.servletContext.setAttribute(Bayeux.DOJOX_COMETD_BAYEUX, bayeux)
+
+        if (Boolean.getBoolean('cometd.listener')){
+          def loggingListener = new ClientListener()
+
+          // create a logging client to log all messages
+          def loggingClient = bayeux.newClient(ClientListener.class.simpleName)
+          bayeux.getChannel('/meta/handshake', true).subscribe(loggingClient)
+          bayeux.getChannel('/meta/connect', true).subscribe(loggingClient)
+
+          // listen to all client added/removed events
+          bayeux.addListener(loggingListener)
+        }
     }
 
     def doWithDynamicMethods = { ctx ->
