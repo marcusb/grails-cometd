@@ -41,25 +41,35 @@ environments {
 
 // log4j configuration
 log4j = {
-  log4j = {
-    appenders {
-      console name: 'consoleAppender', layout: pattern(conversionPattern: "%d{ABSOLUTE} %-5p [%c{1}][%X{tid}] %m%n")
-    }
-    debug consoleAppender: 'org.grails.plugins.cometd'
-
-    error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
-            'org.codehaus.groovy.grails.web.pages', //  GSP
-            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-            'org.codehaus.groovy.grails."web.mapping.filter', // URL mapping
-            'org.codehaus.groovy.grails."web.mapping', // URL mapping
-            'org.codehaus.groovy.grails.commons', // core / classloading
-            'org.codehaus.groovy.grails.plugins', // plugins
-            'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-            'org.springframework',
-            'org.hibernate'
-
-    warn 'org.mortbay.log'
+  appenders {
+    console name: 'consoleAppender', layout: pattern(conversionPattern: "%d{ABSOLUTE} %-5p [%c{1}][%X{tid}] %m%n")
   }
+  debug consoleAppender: 'org.grails.plugins.cometd'
+
+  error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
+          'org.codehaus.groovy.grails.web.pages', //  GSP
+          'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+          'org.codehaus.groovy.grails."web.mapping.filter', // URL mapping
+          'org.codehaus.groovy.grails."web.mapping', // URL mapping
+          'org.codehaus.groovy.grails.commons', // core / classloading
+          'org.codehaus.groovy.grails.plugins', // plugins
+          'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+          'org.springframework',
+          'org.hibernate'
+
+  warn 'org.mortbay.log'
+}
+
+plugins {
+  cometd {
+    noCacheFilter: {
+      disable: false; //the filter add HTTP Header for disabling HTTP cache
+    }
+    cometdService: {
+      disable: false; // disable CometdService that provides extra functions on Cometd
+    }
+  }
+}
 
 
      

@@ -1,6 +1,7 @@
 import grails.util.GrailsUtil
 import org.cometd.Bayeux
 import org.grails.plugins.cometd.CometdService
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class CometdGrailsPlugin {
     def version = '0.1.2'
@@ -23,17 +24,20 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
     static namespace =System.getProperty("cometd.namespace")?:'cometd'
 
     def doWithWebDescriptor = { xml ->
+      def config = ConfigurationHolder.config.plugins.cometd
 
-      def filters = xml.'filter'
-      filters[filters.size()-1] + {
-        filter{
-          'filter-name'('NoCacheFilter-Cometd')
-          'filter-class'('org.grails.plugins.cometd.NoCacheFilter')
-        }
-        if (GrailsUtil.isDevelopmentEnv()){
+      if (config.'noCacheFilter'.'disable'!=true){
+        def filters = xml.'filter'
+        filters[filters.size()-1] + {
           filter{
-          'filter-name'('NoCacheFilter-Default')
-          'filter-class'('org.grails.plugins.cometd.NoCacheFilter')
+            'filter-name'('NoCacheFilter-Cometd')
+            'filter-class'('org.grails.plugins.cometd.NoCacheFilter')
+          }
+          if (GrailsUtil.isDevelopmentEnv()){
+            filter{
+            'filter-name'('NoCacheFilter-Default')
+            'filter-class'('org.grails.plugins.cometd.NoCacheFilter')
+            }
           }
         }
       }
@@ -92,12 +96,12 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
 
 
     def doWithApplicationContext = { applicationContext ->
+        def config = ConfigurationHolder.config.plugins.cometd
         def cometdService = applicationContext.getBean('cometdService')
         def bayeux = applicationContext.getBean('bayeux')
         applicationContext.servletContext.setAttribute(Bayeux.DOJOX_COMETD_BAYEUX, bayeux)
 
-        if (Boolean.getBoolean('cometd.listener')){
-          // create a logging client to log all messages
+        if (config.'cometdService'.'disable'!=true){
           def agent = bayeux.newClient(CometdService.class.simpleName)
           agent.addListener(cometdService)
           bayeux.getChannel('/**', true).subscribe(agent)
