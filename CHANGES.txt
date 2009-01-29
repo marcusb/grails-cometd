@@ -1,0 +1,3 @@
+
+0.1.2 - 2009-01-30
+    - updated to Grails 1.1 beta 3

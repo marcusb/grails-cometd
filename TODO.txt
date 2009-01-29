@@ -1,0 +1,3 @@
+
+Configuration
+ - allow more control over servlet-mapping URL patterns 
