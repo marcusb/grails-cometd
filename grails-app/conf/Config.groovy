@@ -62,11 +62,14 @@ log4j = {
 
 plugins {
   cometd {
-    noCacheFilter: {
+    'servlet-mapping' {
+        namespace = 'cometd'
+    }
+    'noCacheFilter' {
       disable: false; //the filter add HTTP Header for disabling HTTP cache
     }
-    cometdService: {
-      disable: false; // disable CometdService that provides extra functions on Cometd
+    'cometdService' { // Cometd provides extra functions including logging and client tracking
+      disable: false; // disable
     }
   }
 }

@@ -1,6 +1,5 @@
 import grails.util.GrailsUtil
 import org.cometd.Bayeux
-import org.grails.plugins.cometd.CometdService
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class CometdGrailsPlugin {
@@ -20,8 +19,6 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
 
     // URL to the plugin's documentation
     def documentation = "http://grails.org/Cometd+Plugin"
-
-    static namespace =System.getProperty("cometd.namespace")?:'cometd'
 
     def doWithWebDescriptor = { xml ->
       def config = ConfigurationHolder.config.plugins.cometd
@@ -65,6 +62,9 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
           'load-on-startup'(2)
         }
       }
+
+      def namespaceCfg = config.'servlet-mapping'.'namespace'
+      def namespace = namespaceCfg instanceof ConfigObject?'cometd':namespaceCfg
       
       def servletMappings = xml.'servlet-mapping'
       servletMappings[servletMappings.size()-1] + {
@@ -102,7 +102,7 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
         applicationContext.servletContext.setAttribute(Bayeux.DOJOX_COMETD_BAYEUX, bayeux)
 
         if (config.'cometdService'.'disable'!=true){
-          def agent = bayeux.newClient(CometdService.class.simpleName)
+          def agent = bayeux.newClient('org.grails.plugins.cometd.CometdService')
           agent.addListener(cometdService)
           bayeux.getChannel('/**', true).subscribe(agent)
           bayeux.addListener(cometdService)

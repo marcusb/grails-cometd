@@ -11,10 +11,7 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
 </description>
   <documentation>http://grails.org/Cometd+Plugin</documentation>
   <resources>
-    <resource>BootStrap</resource>
     <resource>Config</resource>
-    <resource>DataSource</resource>
-    <resource>spring.resources</resource>
     <resource>UrlMappings</resource>
     <resource>org.grails.plugins.cometd.CometdService</resource>
   </resources>

@@ -1,3 +1,6 @@
 
+Back track bug fixing
+ - all logging in CometdService do not work
+
 Configuration
  - allow more control over servlet-mapping URL patterns 
