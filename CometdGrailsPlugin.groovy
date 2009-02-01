@@ -3,7 +3,7 @@ import org.cometd.Bayeux
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class CometdGrailsPlugin {
-    def version = '0.1.2'
+    def version = '0.1.3'
     def dependsOn = [:]
 
     def author = "Mingfai Ma"
@@ -96,16 +96,11 @@ bayeux instance, and provide all demo programs from the cometd-jetty release.
 
 
     def doWithApplicationContext = { applicationContext ->
-        def config = ConfigurationHolder.config.plugins.cometd
-        def cometdService = applicationContext.getBean('cometdService')
-        def bayeux = applicationContext.getBean('bayeux')
-        applicationContext.servletContext.setAttribute(Bayeux.DOJOX_COMETD_BAYEUX, bayeux)
+        applicationContext.servletContext.setAttribute(Bayeux.DOJOX_COMETD_BAYEUX, applicationContext.getBean('bayeux'))
 
-        if (config.'cometdService'.'disable'!=true){
-          def agent = bayeux.newClient('org.grails.plugins.cometd.CometdService')
-          agent.addListener(cometdService)
-          bayeux.getChannel('/**', true).subscribe(agent)
-          bayeux.addListener(cometdService)
+        def config = ConfigurationHolder.config.'plugins'.'cometd'.'cometdService'.flatten()
+        if (!config.isEmpty() && config.'disable'!=true){
+          applicationContext.getBean('cometdService').init()
         }
     }
 

@@ -11,6 +11,16 @@ class CometdService implements ClientBayeuxListener, MessageListener {
   boolean transactional = false
   def clients = [:] as ConcurrentHashMap
   def getCount() { return clients.size() }
+  def bayeux;
+
+  def init(){
+    println "init()"
+    bayeux.newClient(this.class.name).with{ agent ->
+      agent.addListener(this)
+      bayeux.getChannel('/**', true).subscribe(agent)
+      bayeux.addListener(this)
+    }
+  }
 
   public void clientAdded(Client client) {
     clients.put(client.id, client)
