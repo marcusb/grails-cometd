@@ -69,7 +69,7 @@ plugins {
       disable = false; //the filter add HTTP Header for disabling HTTP cache
     }
     'cometdService' { // Cometd provides extra functions including logging and client tracking
-      disable = false; // disable
+      disable = true; // disable
     }
   }
 }
