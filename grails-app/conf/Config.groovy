@@ -1,3 +1,20 @@
+plugins {
+  cometd {
+    'servlet-mapping' {
+        namespace = 'cometd'
+    }
+    'noCacheFilter' {
+      disable = false; //the filter add HTTP Header for disabling HTTP cache
+    }
+    'cometdService' { // Cometd provides extra functions including logging and client tracking
+      disable = false; // disable
+    }
+  }
+}
+
+
+
+
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 

@@ -1,5 +1,6 @@
 0.1.4     2009-02-20
-  - upgraded to Grails 1.1RC1 with GRAILS-3992 fixed
+    - upgraded to Grails 1.1RC1 with GRAILS-3992 fixed
+    - upgraded all cometd examples and lib to the version from Jetty 6.1.14
   
 0.1.3 - 2009-02-01
     - refactored CometdService to serve as an example for application development
