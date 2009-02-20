@@ -1,1 +1,0 @@
-({"next":"Naslednji","done":"Opravljeno","previous":"Prejšnji"})
