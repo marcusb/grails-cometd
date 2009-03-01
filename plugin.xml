@@ -1,4 +1,4 @@
-<plugin name='cometd' version='0.1.4' grailsVersion='1.1-RC1 &gt; *'>
+<plugin name='cometd' version='0.1.5' grailsVersion='1.1-RC2 &gt; *'>
   <author>Mingfai Ma</author>
   <authorEmail>mingfai.ma@gmail.com</authorEmail>
   <title>Enable your Grails application with Comet functions</title>
