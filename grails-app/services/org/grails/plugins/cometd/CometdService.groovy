@@ -20,7 +20,6 @@ class CometdService implements ClientBayeuxListener, MessageListener {
   def bayeux;
 
   def init() {
-    println "init()"
     if (logger.isInfoEnabled()) logger.info("init()")
     bayeux.newClient(this.class.name).with {agent ->
       agent.addListener(this)
