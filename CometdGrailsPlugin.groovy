@@ -3,7 +3,7 @@ import org.cometd.Bayeux
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class CometdGrailsPlugin {
-    def version = '0.1.4'
+    def version = '0.1.5'
     def dependsOn = [:]
 
     def author = "Mingfai Ma"

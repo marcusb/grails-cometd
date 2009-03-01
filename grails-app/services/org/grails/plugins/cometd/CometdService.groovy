@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory
 class CometdService implements ClientBayeuxListener, MessageListener {
   static Logger logger = LoggerFactory.getLogger(CometdService.class);
   boolean transactional = false
+  static version;
   def clients = [:] as ConcurrentHashMap
 
   def getCount() { return clients.size() }
