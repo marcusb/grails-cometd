@@ -82,7 +82,9 @@ CometD and the Bayeux protocol.
     }
 
     def doWithSpring = {
-        bayeux(BayeuxServerImpl, true) {}
+        bayeux(BayeuxServerImpl, true) { bean ->
+            bean.destroyMethod = 'stop'
+        }
 
         // the CometdServlet will pick up the Bayeux object from the servlet context
         bayeuxAttributeExporter(ServletContextAttributeExporter) {
