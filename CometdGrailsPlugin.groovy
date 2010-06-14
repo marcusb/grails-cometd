@@ -16,6 +16,8 @@
 
 import grails.util.Environment
 
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
+
 import org.cometd.server.BayeuxServerImpl
 import org.cometd.server.CometdServlet
 import org.cometd.bayeux.server.BayeuxServer
@@ -44,9 +46,8 @@ CometD and the Bayeux protocol.
     def documentation = "http://www.grails.org/plugin/cometd"
 
     def doWithWebDescriptor = { xml ->
-        if (Environment.current == Environment.TEST) {
-            // functional tests complain that continuations are not supported in the embedded Tomcat
-            // without the ContinuationFilter
+        def conf = ConfigurationHolder.config.plugins.cometd
+        if (!conf.continuationFilter.disable) {
             def filters = xml.'filter'
             filters[filters.size() - 1] + {
                 filter {
