@@ -27,7 +27,7 @@ grails.project.dependency.resolution = {
         mavenCentral()
     }
     dependencies {
-        def cometdVer = '2.0.beta1'
+        def cometdVer = '2.0.0'
         compile(group: 'org.cometd.java', name: 'cometd-java-server', version: cometdVer) {
             excludes 'servlet-api'
         }
